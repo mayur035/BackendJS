@@ -1,13 +1,29 @@
 const express = require('express')
 const app = express();
-const port=8000;
+const port = 8000;
 
+
+import cookieParser from 'cookie-parser'
 //import routes
-const urlRoutes = require('./router/routes')
+
+import path from "path";
+import { staticRouter } from "./router/staticRoutes";
+import { signupRouter } from "./router/signup";
+import { urlRouter } from "./router/routes";
+import { restrictToLoggedInUserOnly } from "./middlewares/auth";
+
+app.set('view engine', 'ejs')
+app.set('views', path.resolve('./views'))
 
 app.use(express.json())
-app.use("/url",urlRoutes)
+app.use(express.urlencoded({ extends: false }))
+app.use(cookieParser())
 
-app.listen(port,()=>{
+//routes
+app.use("/url",restrictToLoggedInUserOnly, urlRouter)
+app.use("/", staticRouter)
+app.use('/signup', signupRouter)
+
+app.listen(port, () => {
     console.log(`Port is sucessfully running on port ${port}`);
 })

@@ -3,14 +3,14 @@ import express from 'express';
 const data = require('../model/data.json')
 
 
-const router = express.Router();
+const urlRouter = express.Router();
 
-router.post('/', handleGenerateNewShortURL);
+urlRouter.post('/', handleGenerateNewShortURL);
 
-router.get('/:shortID', (req: any, res: any) => {
+urlRouter.get('/:shortID', (req: any, res: any) => {
     const shortid = req.params.shortID;
     const findURL = data.find((d: any) => d.short_url === shortid)
     return res.redirect(findURL.original_url)
 })
 
-module.exports = router;
+export {urlRouter};

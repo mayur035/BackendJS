@@ -22,7 +22,7 @@ const handleGenerateNewShortURL = (req, res) => {
     };
     data.push(getData);
     fs_1.default.writeFile('./model/data.json', JSON.stringify(data), () => {
-        return res.json({
+        return res.render("home", {
             status: 'ShortID generated sucessfully!',
             id: shortID
         });

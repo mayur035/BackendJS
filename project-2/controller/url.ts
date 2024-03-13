@@ -17,12 +17,11 @@ const handleGenerateNewShortURL = (req: any, res: any) => {
     }
     data.push(getData)
     fs.writeFile('./model/data.json', JSON.stringify(data), () => {
-        return res.json({
+        return res.render("home", {
             status: 'ShortID generated sucessfully!',
             id: shortID
         })
-    })
-}
+    })}
 
 
 export {
