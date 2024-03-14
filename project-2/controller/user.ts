@@ -1,6 +1,6 @@
 const usersData = require('../model/usersData.json');
 import fs from 'fs';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { userSet } from '../services/auth';
 
 
@@ -40,11 +40,16 @@ const logInHandler = (req: any, res: any) => {
         return res.send({ status: 'Incorrect password!' });
     }
 
-    const sessionID = uuidv4();
-    userSet(sessionID,user)
-    res.cookie("uid",sessionID)
+    // const sessionID = uuidv4();
+    // userSet(sessionID,user)
+    // res.cookie("uid",sessionID)
+
+    //jwt stateless auth
+    const token = userSet(user);
+    // res.cookie('uid',token)
+
     // Authentication successful, redirect to home page or wherever needed
-    return res.redirect('/');
+    return res.json({token});
 };
 
 

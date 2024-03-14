@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.logInHandler = exports.signupHandler = void 0;
 const usersData = require('../model/usersData.json');
 const fs_1 = __importDefault(require("fs"));
-const uuid_1 = require("uuid");
+// import { v4 as uuidv4 } from 'uuid';
 const auth_1 = require("../services/auth");
 const signupHandler = (req, res) => {
     const { name, email, password } = req.body;
@@ -48,10 +48,13 @@ const logInHandler = (req, res) => {
     if (user.password !== password) {
         return res.send({ status: 'Incorrect password!' });
     }
-    const sessionID = (0, uuid_1.v4)();
-    (0, auth_1.userSet)(sessionID, user);
-    res.cookie("uid", sessionID);
+    // const sessionID = uuidv4();
+    // userSet(sessionID,user)
+    // res.cookie("uid",sessionID)
+    //jwt stateless auth
+    const token = (0, auth_1.userSet)(user);
+    // res.cookie('uid',token)
     // Authentication successful, redirect to home page or wherever needed
-    return res.redirect('/');
+    return res.json({ token });
 };
 exports.logInHandler = logInHandler;

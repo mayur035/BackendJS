@@ -10,7 +10,7 @@ import path from "path";
 import { staticRouter } from "./router/staticRoutes";
 import { signupRouter } from "./router/signup";
 import { urlRouter } from "./router/routes";
-import { restrictToLoggedInUserOnly } from "./middlewares/auth";
+
 
 app.set('view engine', 'ejs')
 app.set('views', path.resolve('./views'))
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extends: false }))
 app.use(cookieParser())
 
 //routes
-app.use("/url",restrictToLoggedInUserOnly, urlRouter)
+app.use("/url", urlRouter)
 app.use("/", staticRouter)
 app.use('/signup', signupRouter)
 
