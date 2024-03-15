@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logInHandler = exports.signupHandler = void 0;
-const usersData = require('../model/usersData.json');
+const usersData = require('../model/users-data.json');
 const fs_1 = __importDefault(require("fs"));
-// import { v4 as uuidv4 } from 'uuid';
 const auth_1 = require("../services/auth");
+const constant_1 = require("../constant");
 const signupHandler = (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password)
-        return res.send({ status: 'Enter data!' });
+        return res.send({ status: constant_1.ERROR_MESSAGE._NotFound('Data') });
     const userData = {
         name: name,
         email: email,
@@ -36,25 +36,25 @@ const logInHandler = (req, res) => {
     const { email, password } = req.body;
     // Check if email and password are provided
     if (!email || !password) {
-        return res.send({ status: 'Enter email and password!' });
+        return res.send({ status: constant_1.ERROR_MESSAGE._NotFound('Data') });
     }
     // Find user by email
     const user = usersData.find((user) => user.email === email);
     // Check if user exists
     if (!user) {
-        return res.send({ status: 'User not found!' });
+        return res.send({ status: constant_1.ERROR_MESSAGE._NotFound(user) });
     }
     // Check if password matches
     if (user.password !== password) {
-        return res.send({ status: 'Incorrect password!' });
+        return res.send({ status: constant_1.ERROR_MESSAGE._NotMatch('password') });
     }
-    // const sessionID = uuidv4();
     // userSet(sessionID,user)
     // res.cookie("uid",sessionID)
     //jwt stateless auth
     const token = (0, auth_1.userSet)(user);
-    // res.cookie('uid',token)
+    res.cookie('token', token);
     // Authentication successful, redirect to home page or wherever needed
-    return res.json({ token });
+    // return res.json({token});
+    return res.redirect('/');
 };
 exports.logInHandler = logInHandler;

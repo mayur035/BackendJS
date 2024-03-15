@@ -1,29 +1,27 @@
-const uniqueID = require('uniqid')
+import uniqid from 'uniqid';
+import data from '../model/data.json'
 import fs from 'fs';
-const data = require('../model/data.json')
+import { ERROR_MESSAGE, HTTP_STATUS_CODES, SUCCESS_MESSAGES } from '../constant';
 
-const handleGenerateNewShortURL = (req: any, res: any) => {
+export const handleGenerateNewShortURL = (req: any, res: any) => {
     const body = req.body;
-    if (!body.url) return res.status(400).json({ error: 'URL is required' })
+    if (!body.url) return res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ error: ERROR_MESSAGE._NotFound('URL') })
 
-    const existingEntry = data.find((entry: any) => entry.original_url === body.url);
+    const existingEntry = data.find((entry: any) => entry.originalUrl === body.url);
     if (existingEntry) {
-        return res.status(400).json({ error: 'Short URL already exists for this URL' });
+        return res.status(HTTP_STATUS_CODES.CONFLICT).json({ error: ERROR_MESSAGE._Conflict('URL') });
     }
-    const shortID = uniqueID();
+    const shortID = uniqid();
     let getData = {
-        original_url: body.url,
-        short_url: shortID,
+        originalUrl: body.url,
+        shortUrl: shortID,
     }
     data.push(getData)
     fs.writeFile('./model/data.json', JSON.stringify(data), () => {
-        return res.render("home", {
-            status: 'ShortID generated sucessfully!',
-            id: shortID
-        })
-    })}
-
-
-export {
-    handleGenerateNewShortURL
+        return res.render("home",
+            {
+                status: SUCCESS_MESSAGES._Ok('short url creation'),
+                id: shortID
+            })
+    })
 }

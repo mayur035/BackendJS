@@ -8,18 +8,27 @@
 //     return sessionIdToUserMap.get(id)
 // }
 
-
+interface User {
+    email: string;
+    password: string;
+    role: string;
+}
 //using jwt token -- stateless auth
 import jwt from 'jsonwebtoken'
 
 const serectKey = 'anySecretkey@1'
 
-const userSet = (user: any) => {
+const userSet = (user: User) => {
     return jwt.sign(user, serectKey)
 }
-const userGet = (token: any) => {
+const userGet = (token: string) => {
     if (!token) return null;
-    return jwt.verify(token, serectKey)
+    try {
+        return jwt.verify(token, serectKey)
+    } catch (e) {
+        console.log(e);
+        return null
+    }
 }
 
 export {

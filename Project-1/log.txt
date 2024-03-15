@@ -1,1 +1,14 @@
 1710230845388 : undefined GET : /api/users/12
+ 1710484445330 : undefined GET : /login
+ 1710484493360 : undefined GET : /api/users/12
+ 1710484506656 : undefined POST : /api/users
+ 1710484529230 : undefined POST : /api/users
+ 1710484587485 : undefined GET : /login
+ 1710484879798 : undefined POST : /api/users
+ 1710484936851 : undefined GET : /api/users/2bk7gb8oltsaj83e
+ 1710484989329 : undefined GET : /api/users/2bk7gb8oltsaj83e
+ 1710485027908 : undefined PATCH : /api/users/2bk7gb8oltsaj83e
+ 1710485048630 : undefined GET : /api/users/
+ 1710485153801 : undefined GET : /api/users/
+ 1710485161950 : undefined POST : /api/users
+ 1710485190141 : undefined GET : /api/users/

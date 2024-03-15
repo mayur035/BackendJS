@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Form</title>
+</head>
+
+<body>
+    <h1>Admin Form</h1>
+    <form action="/task" method="post" style='padding-bottom: 30px;'>
+        <input type="text" name="task" />
+        <button type="submit">create</button>
+    </form>
+    <% if (__taskData.length > 0) { %>
+
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                <% __taskData.forEach(element=> { %>
+                    <tr>
+                        <td>
+                            <%= element.task_id %>
+                        </td>
+                        <td>
+                            <%= element.task_title %>
+                        </td>
+                        <td><button >Update</button></td>
+                        <td><button>Delete</button></td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <% } %>
+</body>
+
+</html>

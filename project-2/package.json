@@ -21,5 +21,8 @@
     "typescript": "^5.4.2",
     "uniqid": "^5.4.0",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/uniqid": "^5.3.4"
   }
 }
